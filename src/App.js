@@ -5,15 +5,18 @@ import { add_income, add_expense, delete_item } from "./redux/Action";
 import { Row, Col, Button, Input, Table } from "reactstrap";
 
 function App(props) {
+
+  const {addIncome, addExpense , Balance, Income, Expense} = props;
   const [Title, setTitle] = useState("");
   const [Amount, setAmount] = useState("");
 
   const calculation = () => {
-    if (Title !== "" && Amount !== "") {
+
+    if (Title  && Amount) {
       if (Amount > 0) {
-        props.addIncome(Date.now(), Title, Amount);
+        addIncome(Date.now(), Title, Amount);
       } else {
-        props.addExpense(Date.now(), Title, Amount);
+        addExpense(Date.now(), Title, Amount);
       }
     } else {
       alert("Enter correct value");
@@ -27,7 +30,7 @@ function App(props) {
         <div className="container">
           <h3>Balance</h3>
 
-          <h5 className="Balance">₹{props.Balance}</h5>
+          <h5 className="Balance">₹{Balance}</h5>
         </div>
         <br />
 
@@ -36,11 +39,11 @@ function App(props) {
             <Row>
               <Col>
                 <h3>Income</h3>
-                <h5 className="Inc">₹{props.Income}</h5>
+                <h5 className="Inc">₹{Income}</h5>
               </Col>
               <Col>
                 <h3>Expense</h3>
-                <h5 className="Exp">₹{props.Expense}</h5>
+                <h5 className="Exp">₹{Expense}</h5>
               </Col>
             </Row>
           </div>
@@ -85,9 +88,7 @@ function App(props) {
                   <td className={val.amount > 0 ? "Pos" : "Neg"}>
                     <i
                       className="far fa-trash-alt"
-                      onClick={() => {
-                        props.delete(val.id);
-                      }}></i>
+                      onClick={() => props.delete(val.id)}></i>
                   </td>
                 </tr>
               );

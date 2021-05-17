@@ -1,4 +1,4 @@
-import { ADD_INCOME, ADD_EXPENSE, DELETE_ITEM } from "./Actiontype";
+import { EXPENSE_TRACKER } from "./Actiontype";
 
 const initial = {
   balance: 0,
@@ -11,25 +11,23 @@ const initial = {
 
 const Reducer = (state = initial, action) => {
   switch (action.type) {
-    case ADD_INCOME:
+    case EXPENSE_TRACKER.ADD_INCOME:
       console.log(state.arr)
       return {
         ...state,
         balance: state.balance + parseInt(action.amount),
         income: state.income + parseInt(action.amount),
-        value:{ id: action.id, title: action.title, amount: action.amount},
-        arr:[...state.arr,state.value]
+        arr: state.arr.concat({ id: action.id, title: action.title, amount: action.amount})
       };
 
-    case ADD_EXPENSE:
+    case EXPENSE_TRACKER.ADD_EXPENSE:
       return {
         ...state,
         balance: state.balance + parseInt(action.amount),
         expense: state.expense + parseInt(action.amount),
-        value:{ id: action.id, title: action.title, amount: action.amount},
-        arr:[...state.arr,state.value]
+        arr:  state.arr.concat({ id: action.id, title: action.title, amount: action.amount}) 
       };
-    case DELETE_ITEM:
+    case EXPENSE_TRACKER.DELETE_ITEM:
       const am=state.arr.find((ar)=>{
         if (ar.id===action.id) return ar.amount
       })
